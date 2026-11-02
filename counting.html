@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ספירה בשטח | מטאור אבטחה</title>
+  <meta
+    name="description"
+    content="מסך ספירה בשטח במערכת מטאור אבטחה לצפייה באירועי היום, ספירת קבלנים מאושרים, השוואה מול רשימות עובדים ושליחת אירוע לחתימת קבלן."
+  />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="./css/style.css" />
+</head>
+<body class="meteor-admin-page meteor-counting-page">
+  <div class="meteor-bg-animated">
+  <div class="meteor-line" style="left:10%; animation-delay:0s;"></div>
+  <div class="meteor-line alt" style="left:30%; animation-delay:1.5s;"></div>
+  <div class="meteor-line" style="left:55%; animation-delay:3s;"></div>
+  <div class="meteor-line alt" style="left:75%; animation-delay:2s;"></div>
+  <div class="meteor-line" style="left:90%; animation-delay:4s;"></div>
+</div>
+  <div class="meteor-bg-grid"></div>
+  <div class="meteor-bg-glow glow-1"></div>
+  <div class="meteor-bg-glow glow-2"></div>
+
+  <div class="meteor-app-shell">
+    <aside class="meteor-sidebar" id="adminSidebar">
+      <div class="meteor-sidebar-top">
+        <a href="./admin.html" class="meteor-brand meteor-sidebar-brand">
+          <img src="./logo.jpeg" class="meteor-brand-logo" alt="מטאור אבטחה">
+          <div>
+            <strong>מטאור אבטחה</strong>
+            <small>ספירה בשטח</small>
+          </div>
+        </a>
+
+        <button class="meteor-sidebar-close d-lg-none" id="closeSidebarBtn" type="button" aria-label="סגור תפריט">
+          ✕
+        </button>
+      </div>
+
+      <nav class="meteor-sidebar-nav">
+        <a href="./admin.html">
+          <span>🏠</span>
+          <span>דשבורד</span>
+        </a>
+        <a href="./events.html">
+          <span>📅</span>
+          <span>אירועים</span>
+        </a>
+        <a href="./assignments.html">
+          <span>🧩</span>
+          <span>שיבוצים</span>
+        </a>
+        <a href="./counting.html" class="active">
+          <span>🧮</span>
+          <span>ספירה בשטח</span>
+        </a>
+        <a href="./contractors-management.html">
+          <span>👷</span>
+          <span>קבלנים</span>
+        </a>
+        <a href="./system-tables.html">
+          <span>🗂️</span>
+          <span>טבלאות מערכת</span>
+        </a>
+      </nav>
+
+      <div class="meteor-sidebar-footer">
+        <button id="logoutBtn" class="meteor-btn meteor-btn-danger meteor-btn-sidebar-logout w-100">
+          התנתקות
+        </button>
+      </div>
+    </aside>
+
+    <div class="meteor-sidebar-backdrop d-lg-none" id="sidebarBackdrop"></div>
+
+    <main class="meteor-main-content">
+      <header class="meteor-admin-topbar meteor-admin-topbar-compact">
+        <div class="meteor-admin-topbar-left">
+          <button class="meteor-icon-btn d-lg-none" id="openSidebarBtn" type="button" aria-label="פתח תפריט">
+            ☰
+          </button>
+
+          <div>
+            <div class="meteor-page-kicker">מסך מנהל / ספירה בשטח</div>
+            <h1 class="meteor-page-title">ספירה <span>ואימות קבלנים בשטח</span></h1>
+          </div>
+        </div>
+      </header>
+
+
+      <div id="countingMsgBox"></div>
+
+      <section class="meteor-panel meteor-panel-inline-note">
+        <div class="meteor-inline-info-strip">
+          <div class="meteor-inline-info-icon">ℹ️</div>
+          <div class="meteor-inline-info-text">
+            רק קבלנים שנספרו <strong>ונחתמו</strong> ייכנסו לפירוט החודשי.
+          </div>
+        </div>
+      </section>
+
+
+      <section class="meteor-panel meteor-panel-filters">
+        <div class="meteor-panel-head">
+          <div>
+            <h3>חיפוש וסינון אירועים</h3>
+            <p>כברירת מחדל יוצגו אירועי היום, אך ניתן לעבור בין תאריכים ולחפש אירוע ספציפי.</p>
+          </div>
+        </div>
+
+        <div class="meteor-filters-grid meteor-filters-grid-premium counting-filters-grid">
+          <div class="meteor-form-group mb-0">
+            <label class="meteor-label" for="countingDateFilter">תאריך</label>
+            <input type="date" id="countingDateFilter" class="meteor-input meteor-input-light-picker" />
+          </div>
+
+          <div class="meteor-form-group mb-0">
+            <label class="meteor-label" for="countingSearchInput">חיפוש</label>
+            <input
+              id="countingSearchInput"
+              class="meteor-input"
+              type="text"
+              placeholder="חיפוש לפי שם אירוע / קבוצה / אצטדיון / עיר / מיקום"
+            />
+          </div>
+
+          <div class="meteor-form-group mb-0">
+            <label class="meteor-label" for="countingTypeFilter">סוג אירוע</label>
+            <select id="countingTypeFilter" class="meteor-input meteor-select">
+              <option value="all">הכל</option>
+              <option value="football">משחק כדורגל</option>
+              <option value="event">אירוע רגיל</option>
+            </select>
+          </div>
+
+          <div class="meteor-filters-actions meteor-filters-actions-compact counting-filter-actions">
+            <button id="prevDayBtn" class="meteor-btn meteor-btn-outline" type="button">יום קודם</button>
+            <button id="nextDayBtn" class="meteor-btn meteor-btn-outline" type="button">יום הבא</button>
+            <button id="clearCountingFiltersBtn" class="meteor-btn meteor-btn-ghost" type="button">חזרה להיום</button>
+            <button id="refreshCountingBtn" class="meteor-btn meteor-btn-primary" type="button">רענון</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="meteor-panel">
+        <div class="meteor-panel-head">
+          <div>
+            <h3>אירועים לספירה</h3>
+            <p id="countingSummaryText">טוען אירועים...</p>
+          </div>
+        </div>
+
+        <div id="countingEventsList" class="meteor-events-list">
+          <div class="meteor-empty-state">
+            <strong>טוען אירועים...</strong>
+            <span>רק רגע.</span>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- EVENT COUNTING MODAL -->
+  <div class="meteor-modal-backdrop" id="countingModalBackdrop"></div>
+  <section class="meteor-modal" id="countingModal" aria-hidden="true">
+    <div class="meteor-modal-dialog meteor-modal-dialog-xl counting-modal-wide">
+      <div class="meteor-modal-header">
+        <div>
+          <span class="meteor-chip">ספירת אירוע</span>
+          <h3 id="countingModalTitle">פרטי אירוע</h3>
+          <p id="countingModalSubtitle">טעינת נתוני אירוע...</p>
+        </div>
+
+        <button type="button" id="closeCountingModal" class="meteor-modal-close" aria-label="סגור">✕</button>
+      </div>
+
+      <div class="counting-modal-top-grid">
+        <section class="meteor-form-section">
+          <div class="meteor-form-section-head">
+            <h4>פרטי האירוע</h4>
+            <p>מידע מרכזי לצורך עבודה מהירה בשטח.</p>
+          </div>
+
+          <div class="assignment-event-header-box counting-event-header-box">
+            <div class="assignment-event-title-wrap">
+              <h4 id="countingEventInfoTitle">---</h4>
+              <span id="countingEventInfoType" class="meteor-mini-badge primary">---</span>
+            </div>
+
+            <div id="countingEventInfoMeta" class="assignment-event-meta-grid"></div>
+          </div>
+        </section>
+
+        <section class="meteor-form-section">
+          <div class="meteor-form-section-head">
+            <h4>סיכום ספירה</h4>
+            <p>השוואה בין מאושר, נספר, ממתין וחתום.</p>
+          </div>
+
+          <div class="assignment-summary-kpis counting-summary-kpis">
+            <div class="assignment-summary-card">
+              <span>קבלנים מאושרים</span>
+              <strong id="summaryApprovedContractors">0</strong>
+            </div>
+
+            <div class="assignment-summary-card">
+              <span>נספרו עד כה</span>
+              <strong id="summaryCountedContractors">0</strong>
+            </div>
+
+            <div class="assignment-summary-card">
+              <span>ממתינים לספירה</span>
+              <strong id="summaryRemainingContractors">0</strong>
+            </div>
+
+            <div class="assignment-summary-card">
+              <span>ממתינים לחתימה</span>
+              <strong id="summaryWaitingSignature">0</strong>
+            </div>
+
+            <div class="assignment-summary-card">
+              <span>סה״כ מאושר</span>
+              <strong id="summaryApprovedPeople">0</strong>
+            </div>
+
+            <div class="assignment-summary-card">
+              <span>סה״כ נספר בפועל</span>
+              <strong id="summaryActualPeople">0</strong>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div class="counting-toolbar">
+        <div class="meteor-form-group mb-0">
+          <label class="meteor-label" for="countingContractorSearch">חיפוש קבלן</label>
+          <input
+            id="countingContractorSearch"
+            type="text"
+            class="meteor-input"
+            placeholder="חיפוש לפי שם קבלן / טלפון"
+          />
+        </div>
+
+        <div class="meteor-form-group mb-0">
+          <label class="meteor-label" for="countingStatusFilter">סינון לפי מצב</label>
+          <select id="countingStatusFilter" class="meteor-input meteor-select">
+            <option value="all">הכל</option>
+            <option value="approved_waiting_count">רק ממתינים לספירה</option>
+            <option value="waiting_signature">רק ממתינים לחתימה</option>
+            <option value="signed">רק חתומים</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="counting-contractors-scroll">
+        <div id="countingAssignmentsList" class="counting-contractors-grid">
+          <div class="meteor-empty-state">
+            <strong>טוען קבלנים מאושרים...</strong>
+            <span>רק רגע.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WORKERS LIST MODAL -->
+  <div class="meteor-modal-backdrop" id="workersCompareModalBackdrop"></div>
+  <section class="meteor-modal" id="workersCompareModal" aria-hidden="true">
+    <div class="meteor-modal-dialog meteor-modal-dialog-lg workers-compare-modal">
+      <div class="meteor-modal-header">
+        <div>
+          <span class="meteor-chip">רשימת עובדים</span>
+          <h3 id="workersCompareTitle">רשימת עובדים לאירוע</h3>
+          <p id="workersCompareSubtitle">בדיקה מול העובדים שהגיעו בפועל.</p>
+        </div>
+
+        <button type="button" id="closeWorkersCompareModal" class="meteor-modal-close" aria-label="סגור">✕</button>
+      </div>
+
+      <div class="workers-compare-topbar">
+        <div class="meteor-form-group mb-0">
+          <label class="meteor-label" for="workersCompareSearch">חיפוש ברשימה</label>
+          <input
+            id="workersCompareSearch"
+            type="text"
+            class="meteor-input"
+            placeholder="חיפוש לפי שם / ת״ז"
+          />
+        </div>
+
+        <div class="meteor-form-group mb-0">
+          <label class="meteor-label" for="workersCompareStatusFilter">סינון</label>
+          <select id="workersCompareStatusFilter" class="meteor-input meteor-select">
+            <option value="all">הכל</option>
+            <option value="arrived">רק מסומנים כהגיעו</option>
+            <option value="not_arrived">רק שלא סומנו</option>
+            <option value="certified">רק בעלי תעודה</option>
+            <option value="regular">רק רגילים</option>
+            <option value="approved">רק מאושרי חברה</option>
+            <option value="rejected">רק נדחים</option>
+            <option value="pending">רק pending</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="workers-compare-summary">
+        <div class="workers-compare-pill">
+          <span>סה״כ ברשימה</span>
+          <strong id="workersTotalCount">0</strong>
+        </div>
+        <div class="workers-compare-pill">
+          <span>סומנו כהגיעו</span>
+          <strong id="workersArrivedCount">0</strong>
+        </div>
+        <div class="workers-compare-pill">
+          <span>בעלי תעודה</span>
+          <strong id="workersCertifiedCount">0</strong>
+        </div>
+      </div>
+
+      <div class="workers-compare-table-wrap">
+        <table class="table align-middle workers-compare-table mb-0">
+          <thead>
+            <tr>
+              <th style="width:70px;">הגיע</th>
+              <th>שם עובד</th>
+              <th>ת״ז</th>
+              <th>סוג</th>
+              <th>ספייר</th>
+              <th>סטטוס חברה</th>
+            </tr>
+          </thead>
+          <tbody id="workersCompareTableBody">
+            <tr>
+              <td colspan="6" class="text-center py-4">טוען רשימת עובדים...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="meteor-modal-footer">
+        <button type="button" id="markAllWorkersArrivedBtn" class="meteor-btn meteor-btn-outline">
+          סמן את כולם כהגיעו
+        </button>
+        <button type="button" id="clearAllWorkersArrivedBtn" class="meteor-btn meteor-btn-ghost">
+          נקה סימון
+        </button>
+        <button type="button" id="saveWorkersArrivalBtn" class="meteor-btn meteor-btn-primary">
+          שמור סימוני הגעה
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- COUNT CONTRACTOR MODAL -->
+  <div class="meteor-modal-backdrop" id="countContractorModalBackdrop"></div>
+  <section class="meteor-modal" id="countContractorModal" aria-hidden="true">
+    <div class="meteor-modal-dialog meteor-modal-dialog-lg count-contractor-modal">
+      <div class="meteor-modal-header">
+        <div>
+          <span class="meteor-chip">ספירת קבלן</span>
+          <h3 id="countContractorTitle">עדכון ספירה בפועל</h3>
+          <p id="countContractorSubtitle">השוואה בין המאושר לבין בפועל.</p>
+        </div>
+
+        <button type="button" id="closeCountContractorModal" class="meteor-modal-close" aria-label="סגור">✕</button>
+      </div>
+
+      <div class="count-contractor-approved-strip" id="countContractorApprovedStrip">
+        <div class="count-approved-box">
+          <span>דיילים מאושרים</span>
+          <strong id="approvedWorkersValue">0</strong>
+        </div>
+        <div class="count-approved-box">
+          <span>תעודות מאושרים</span>
+          <strong id="approvedCertifiedValue">0</strong>
+        </div>
+        <div class="count-approved-box">
+          <span>מפקדים מאושרים</span>
+          <strong id="approvedCommandersValue">0</strong>
+        </div>
+        <div class="count-approved-box">
+          <span>מקדים מאושרים</span>
+          <strong id="approvedEarlyValue">0</strong>
+        </div>
+        <div class="count-approved-box count-approved-box-total">
+          <span>סה״כ מאושר</span>
+          <strong id="approvedGrandValue">0</strong>
+        </div>
+      </div>
+
+      <div id="countContractorMessageBox" class="mb-3"></div>
+
+      <form id="countContractorForm">
+        <input type="hidden" id="countAssignmentId" />
+
+        <div class="count-contractor-grid">
+          <div class="meteor-form-group mb-0">
+            <label class="meteor-label" for="actualWorkersInput">דיילים בפועל</label>
+            <input
+              id="actualWorkersInput"
+              type="number"
+              inputmode="numeric"
+              pattern="[0-9]*"
+              min="0"
+              step="1"
+              class="meteor-input"
+              value="0"
+              placeholder="0"
+            />
+          </div>
+
+          <div class="meteor-form-group mb-0">
+            <label class="meteor-label" for="actualCertifiedInput">בעלי תעודה בפועל</label>
+            <input
+              id="actualCertifiedInput"
+              type="number"
+              inputmode="numeric"
+              pattern="[0-9]*"
+              min="0"
+              step="1"
+              class="meteor-input"
+              value="0"
+              placeholder="0"
+            />
+          </div>
+
+          <div class="meteor-form-group mb-0">
+            <label class="meteor-label" for="actualCommandersInput">מפקדים בפועל</label>
+            <input
+              id="actualCommandersInput"
+              type="number"
+              inputmode="numeric"
+              pattern="[0-9]*"
+              min="0"
+              step="1"
+              class="meteor-input"
+              value="0"
+              placeholder="0"
+            />
+          </div>
+
+          <div class="meteor-form-group mb-0">
+            <label class="meteor-label" for="actualEarlyInput">כוח מקדים בפועל</label>
+            <input
+              id="actualEarlyInput"
+              type="number"
+              inputmode="numeric"
+              pattern="[0-9]*"
+              min="0"
+              step="1"
+              class="meteor-input"
+              value="0"
+              placeholder="0"
+            />
+          </div>
+        </div>
+
+        <div class="count-contractor-live-summary">
+          <div class="workers-compare-pill">
+            <span>סה״כ בפועל</span>
+            <strong id="actualGrandLiveValue">0</strong>
+          </div>
+          <div class="workers-compare-pill">
+            <span>הפרש מול מאושר</span>
+            <strong id="actualDeltaLiveValue">0</strong>
+          </div>
+        </div>
+
+        <div class="meteor-form-group mb-0">
+          <label class="meteor-label" for="countingNoteInput">הערת מנהל</label>
+          <textarea
+            id="countingNoteInput"
+            class="meteor-input meteor-textarea"
+            rows="4"
+            placeholder="הערה פנימית על הספירה, חריגים, אי התאמות, עובדים חסרים וכו׳"
+          ></textarea>
+        </div>
+
+        <div class="counting-action-note">
+          לאחר שמירה תישלח הודעת וואטסאפ לקבלן כדי שייכנס לאזור האישי ויאשר את הספירה.
+        </div>
+
+        <div class="meteor-modal-footer">
+          <button type="button" id="cancelCountContractorBtn" class="meteor-btn meteor-btn-ghost">
+            ביטול
+          </button>
+          <button type="submit" id="saveCountContractorBtn" class="meteor-btn meteor-btn-primary">
+            שמור ושלח לחתימת קבלן
+          </button>
+        </div>
+      </form>
+    </div>
+  </section>
+   <footer class="meteor-signature">
+  <span>
+    Developed & Designed by <strong>Nor Khatib</strong> · © 2026 Meteor Security System
+  </span>
+</footer>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script type="module" src="./js/counting.js"></script>
+</body>
+</html>

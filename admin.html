@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>מנהל מערכת | מטאור אבטחה</title>
+  <meta
+    name="description"
+    content="מסך הניהול הראשי של מטאור אבטחה לניהול אירועים, קבלנים, ספירות, חתימות ודוחות."
+  />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="./css/style.css" />
+</head>
+<body class="meteor-admin-page">
+  <div class="meteor-bg-animated">
+    <div class="meteor-line" style="left:10%; animation-delay:0s;"></div>
+    <div class="meteor-line alt" style="left:30%; animation-delay:1.5s;"></div>
+    <div class="meteor-line" style="left:55%; animation-delay:3s;"></div>
+    <div class="meteor-line alt" style="left:75%; animation-delay:2s;"></div>
+    <div class="meteor-line" style="left:90%; animation-delay:4s;"></div>
+  </div>
+  <div class="meteor-bg-grid"></div>
+  <div class="meteor-bg-glow glow-1"></div>
+  <div class="meteor-bg-glow glow-2"></div>
+
+  <div class="meteor-app-shell">
+    <aside class="meteor-sidebar" id="adminSidebar">
+      <div class="meteor-sidebar-top">
+        <a href="./admin.html" class="meteor-brand meteor-sidebar-brand">
+          <img src="./logo.jpeg" class="meteor-brand-logo" alt="מטאור אבטחה">
+          <div>
+            <strong>מטאור אבטחה</strong>
+            <small>פאנל ניהול ראשי</small>
+          </div>
+        </a>
+
+        <button class="meteor-sidebar-close d-lg-none" id="closeSidebarBtn" type="button" aria-label="סגור תפריט">
+          ✕
+        </button>
+      </div>
+
+      <nav class="meteor-sidebar-nav">
+        <a href="./admin.html" class="active">
+          <span>🏠</span>
+          <span>דשבורד</span>
+        </a>
+        <a href="./events.html">
+          <span>📅</span>
+          <span>אירועים</span>
+        </a>
+        <a href="./assignments.html">
+          <span>🧩</span>
+          <span>שיבוצים</span>
+        </a>
+        <a href="./counting.html">
+          <span>🧮</span>
+          <span>ספירה בשטח</span>
+        </a>
+        <a href="./contractors-management.html">
+          <span>👷</span>
+          <span>קבלנים</span>
+        </a>
+        <a href="./system-tables.html">
+          <span>🗂️</span>
+          <span>טבלאות מערכת</span>
+        </a>
+      </nav>
+
+      <div class="meteor-sidebar-footer">
+        <button id="logoutBtn" class="meteor-btn meteor-btn-danger w-100">
+          התנתקות
+        </button>
+      </div>
+    </aside>
+
+    <div class="meteor-sidebar-backdrop d-lg-none" id="sidebarBackdrop"></div>
+
+    <main class="meteor-main-content">
+      <header class="meteor-admin-topbar">
+        <div class="meteor-admin-topbar-left">
+          <button class="meteor-icon-btn d-lg-none" id="openSidebarBtn" type="button" aria-label="פתח תפריט">
+            ☰
+          </button>
+
+          <div>
+            <div class="meteor-page-kicker">מסך מנהל</div>
+            <h1 class="meteor-page-title">ברוך הבא, <span id="adminNameInline">מנהל</span></h1>
+          </div>
+        </div>
+      </header>
+
+      <section class="meteor-admin-hero">
+        <div class="meteor-admin-hero-card meteor-admin-hero-card-premium">
+          <div class="meteor-admin-hero-copy">
+            <span class="meteor-chip">שליטה מלאה על הפעילות המבצעית</span>
+            <h2>ניהול יומי, בקרה חודשית ומבט אחד על כל המערכת</h2>
+            <p>
+              מסך הניהול הראשי מרכז עבורך את האירועים, תגובות הקבלנים, ספירות השטח,
+              החתימות הממתינות והמעבר המהיר לכל פעולה חשובה — בצורה מקצועית,
+              ברורה ונקייה שמתאימה למערכת מסחרית אמיתית.
+            </p>
+          </div>
+
+          <div class="meteor-admin-hero-actions">
+            <a href="./counting.html" class="meteor-btn meteor-btn-primary">מעבר למסך ספירה</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="meteor-kpi-grid">
+        <article class="meteor-kpi-card">
+          <div class="meteor-kpi-label">אירועים החודש</div>
+          <div class="meteor-kpi-value" id="kpiMonthEvents">--</div>
+          <div class="meteor-kpi-sub" id="kpiMonthEventsSub">טוען נתונים...</div>
+        </article>
+
+        <article class="meteor-kpi-card">
+          <div class="meteor-kpi-label">קבלנים ממתינים לתגובה</div>
+          <div class="meteor-kpi-value" id="kpiPendingResponses">--</div>
+          <div class="meteor-kpi-sub" id="kpiPendingResponsesSub">טוען נתונים...</div>
+        </article>
+
+        <article class="meteor-kpi-card">
+          <div class="meteor-kpi-label">חתימות ממתינות</div>
+          <div class="meteor-kpi-value" id="kpiWaitingSignatures">--</div>
+          <div class="meteor-kpi-sub" id="kpiWaitingSignaturesSub">טוען נתונים...</div>
+        </article>
+
+        <article class="meteor-kpi-card">
+          <div class="meteor-kpi-label"> זמינים</div>
+          <div class="meteor-kpi-value" id="kpiMonthlyReports">--</div>
+          <div class="meteor-kpi-sub" id="kpiMonthlyReportsSub">טוען נתונים...</div>
+        </article>
+      </section>
+
+      <section class="meteor-admin-grid">
+        <div class="meteor-panel meteor-panel-xl meteor-calendar-panel">
+          <div class="meteor-panel-head">
+            <div>
+              <h3>קלנדר אירועים חודשי</h3>
+              <p>ימים עם אירועים מסומנים בצבע, ובלחיצה מוצגים אירועי אותו יום.</p>
+            </div>
+          </div>
+
+          <div class="meteor-calendar-shell">
+            <div class="meteor-calendar-toolbar">
+              <button type="button" class="meteor-calendar-nav" id="prevMonthBtn">→</button>
+              <div class="meteor-calendar-title-wrap">
+                <div class="meteor-calendar-title" id="calendarMonthTitle">--</div>
+                <div class="meteor-calendar-subtitle">מבט חודשי על כלל האירועים</div>
+              </div>
+              <button type="button" class="meteor-calendar-nav" id="nextMonthBtn">←</button>
+            </div>
+
+            <div class="meteor-calendar-weekdays">
+              <div>א׳</div>
+              <div>ב׳</div>
+              <div>ג׳</div>
+              <div>ד׳</div>
+              <div>ה׳</div>
+              <div>ו׳</div>
+              <div>ש׳</div>
+            </div>
+
+            <div id="monthCalendarGrid" class="meteor-calendar-grid">
+              <div class="meteor-empty-state small">
+                <strong>טוען קלנדר...</strong>
+                <span>רק רגע.</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="meteor-selected-day-block">
+            <div class="meteor-selected-day-head">
+              <div>
+                <h4 id="selectedDayTitle">אירועי היום הנבחר</h4>
+                <p id="selectedDaySubtitle">בחר יום מתוך הקלנדר</p>
+              </div>
+              <a href="./events.html" class="meteor-panel-link">למסך אירועים</a>
+            </div>
+
+            <div id="selectedDayEventsList" class="meteor-list-stack">
+              <div class="meteor-empty-state small">
+                <strong>עדיין לא נבחר יום</strong>
+                <span>לחץ על יום בקלנדר כדי לראות את האירועים שלו.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="meteor-panel">
+          <div class="meteor-panel-head">
+            <div>
+              <h3>התראות ניהול</h3>
+              <p>רשימה חכמה לפי הנתונים החשובים כרגע במערכת.</p>
+            </div>
+          </div>
+
+          <div id="adminAlertsList" class="meteor-alerts-list">
+            <div class="meteor-empty-state small">
+              <strong>טוען התראות...</strong>
+              <span>רק רגע.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="meteor-panel">
+          <div class="meteor-panel-head">
+            <div>
+              <h3>קבלנים שממתינים לטיפול</h3>
+              <p>אישורים ממתינים או בקשות שינוי כמות.</p>
+            </div>
+            <a href="./assignments.html" class="meteor-panel-link">למסך שיבוצים</a>
+          </div>
+
+          <div id="pendingAssignmentsList" class="meteor-list-stack">
+            <div class="meteor-empty-state small">
+              <strong>טוען נתונים...</strong>
+              <span>רק רגע.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="meteor-panel">
+          <div class="meteor-panel-head">
+            <div>
+              <h3>ממתינים לחתימה</h3>
+              <p>אירועים שנספרו ונשלחו לאישור קבלן.</p>
+            </div>
+            <a href="./reports.html" class="meteor-panel-link">לדוחות</a>
+          </div>
+
+          <div id="waitingSignaturesList" class="meteor-list-stack">
+            <div class="meteor-empty-state small">
+              <strong>טוען חתימות...</strong>
+              <span>רק רגע.</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+  <footer class="meteor-signature">
+  <span>
+    Developed & Designed by <strong>Nor Khatib</strong> · © 2026 Meteor Security System
+  </span>
+</footer>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script type="module" src="./js/admin.js"></script>
+</body>
+</html>

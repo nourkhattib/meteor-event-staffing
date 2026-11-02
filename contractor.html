@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>אזור קבלן | מטאור אבטחה</title>
+  <meta
+    name="description"
+    content="אזור אישי לקבלן במערכת מטאור אבטחה לצפייה בהזמנות, אישור הגעה, בקשת שינוי כמות, ניהול רשימות עובדים, חתימה ופירוט חודשי."
+  />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="./css/style.css" />
+</head>
+<body class="meteor-admin-page meteor-contractor-page">
+  <div class="meteor-bg-animated">
+  <div class="meteor-line" style="left:10%; animation-delay:0s;"></div>
+  <div class="meteor-line alt" style="left:30%; animation-delay:1.5s;"></div>
+  <div class="meteor-line" style="left:55%; animation-delay:3s;"></div>
+  <div class="meteor-line alt" style="left:75%; animation-delay:2s;"></div>
+  <div class="meteor-line" style="left:90%; animation-delay:4s;"></div>
+</div>
+  <div class="meteor-bg-grid"></div>
+  <div class="meteor-bg-glow glow-1"></div>
+  <div class="meteor-bg-glow glow-2"></div>
+
+  <div class="meteor-app-shell meteor-contractor-shell">
+    <aside class="meteor-sidebar" id="contractorSidebar">
+      <div class="meteor-sidebar-top">
+        <a href="./contractor.html" class="meteor-brand meteor-sidebar-brand">
+          <img src="./logo.jpeg" class="meteor-brand-logo" alt="מטאור אבטחה">
+          <div>
+            <strong>מטאור אבטחה</strong>
+            <small>אזור אישי לקבלן</small>
+          </div>
+        </a>
+
+        <button class="meteor-sidebar-close d-lg-none" id="closeSidebarBtn" type="button" aria-label="סגור תפריט">
+          ✕
+        </button>
+      </div>
+
+      <div class="meteor-sidebar-user contractor-sidebar-user">
+        <span class="meteor-sidebar-user-avatar" id="contractorAvatar">ק</span>
+        <div>
+          <strong id="contractorFullName">קבלן</strong>
+          <span id="contractorCompanyName">טוען...</span>
+        </div>
+      </div>
+
+      <nav class="meteor-sidebar-nav">
+        <button class="contractor-stage-nav-btn active" type="button" data-stage="pendingStage">
+          <span>📩</span>
+          <span>הזמנות פתוחות</span>
+        </button>
+
+        <button class="contractor-stage-nav-btn" type="button" data-stage="approvedStage">
+          <span>✅</span>
+          <span>ממתין לספירה</span>
+        </button>
+
+        <button class="contractor-stage-nav-btn" type="button" data-stage="signatureStage">
+          <span>✍️</span>
+          <span>ממתין לחתימה</span>
+        </button>
+
+        <button class="contractor-stage-nav-btn" type="button" data-stage="workersStage">
+          <span>👷</span>
+          <span>מאגר עובדים</span>
+        </button>
+
+        <button class="contractor-stage-nav-btn" type="button" data-stage="monthlyStage">
+          <span>💰</span>
+          <span>פירוט חודשי</span>
+        </button>
+      </nav>
+
+      <div class="meteor-sidebar-footer contractor-sidebar-footer">
+        <button id="openProfileBtn" class="meteor-btn meteor-btn-outline w-100 mb-2">
+          עדכון פרטים
+        </button>
+        <button id="logoutBtn" class="meteor-btn meteor-btn-danger w-100">
+          התנתקות
+        </button>
+      </div>
+    </aside>
+
+    <div class="meteor-sidebar-backdrop d-lg-none" id="sidebarBackdrop"></div>
+
+    <main class="meteor-main-content">
+      <header class="meteor-admin-topbar contractor-fixed-topbar">
+        <div class="meteor-admin-topbar-left">
+          <button class="meteor-icon-btn d-lg-none" id="openSidebarBtn" type="button" aria-label="פתח תפריט">
+            ☰
+          </button>
+
+          <div>
+            <div class="meteor-page-kicker">אזור אישי / קבלן</div>
+            <h1 class="meteor-page-title">שלום, <span id="contractorNameInline">קבלן</span></h1>
+          </div>
+        </div>
+
+        <div class="meteor-admin-topbar-right contractor-topbar-actions">
+          <button id="refreshPageBtn" class="meteor-btn meteor-btn-outline meteor-btn-sm" type="button">
+            רענון נתונים
+          </button>
+        </div>
+      </header>
+
+      <section class="meteor-admin-hero contractor-fixed-hero">
+        <div class="meteor-admin-hero-card meteor-admin-hero-card-premium meteor-contractor-hero">
+          <div class="meteor-admin-hero-copy">
+            <span class="meteor-chip">מערכת עבודה מרוכזת לקבלן</span>
+            <h2>הזמנות, רשימות עובדים, חתימות ופירוט חודשי במסך אחד מקצועי</h2>
+            <p>
+              בחר את השלב הרצוי דרך שכבות העבודה. כל שכבה מציגה רק את האזור שלה עם חיפוש, סינון,
+              פעולות רלוונטיות ותצוגה ברורה שמתאימה לעבודה אמיתית מול החברה.
+            </p>
+          </div>
+
+          <div class="meteor-admin-hero-actions contractor-hero-actions">
+            <button id="quickPendingBtn" class="meteor-btn meteor-btn-primary" type="button">הזמנות פתוחות</button>
+            <button id="quickWorkersBtn" class="meteor-btn meteor-btn-ghost" type="button">מאגר עובדים</button>
+          </div>
+        </div>
+      </section>
+
+      <div id="pageMessageBox"></div>
+
+      <section class="meteor-kpi-grid contractor-kpi-grid contractor-fixed-kpis">
+        <article class="meteor-kpi-card">
+          <div class="meteor-kpi-label">הזמנות פתוחות</div>
+          <div class="meteor-kpi-value" id="kpiPendingInvites">--</div>
+          <div class="meteor-kpi-sub" id="kpiPendingInvitesSub">טוען נתונים...</div>
+        </article>
+
+        <article class="meteor-kpi-card">
+          <div class="meteor-kpi-label">ממתין לספירה</div>
+          <div class="meteor-kpi-value" id="kpiWaitingCount">--</div>
+          <div class="meteor-kpi-sub" id="kpiWaitingCountSub">טוען נתונים...</div>
+        </article>
+
+        <article class="meteor-kpi-card">
+          <div class="meteor-kpi-label">ממתין לחתימה</div>
+          <div class="meteor-kpi-value" id="kpiWaitingSignature">--</div>
+          <div class="meteor-kpi-sub" id="kpiWaitingSignatureSub">טוען נתונים...</div>
+        </article>
+
+        <article class="meteor-kpi-card">
+          <div class="meteor-kpi-label">עובדים במאגר</div>
+          <div class="meteor-kpi-value" id="kpiWorkersPool">--</div>
+          <div class="meteor-kpi-sub" id="kpiWorkersPoolSub">טוען נתונים...</div>
+        </article>
+      </section>
+
+      <section class="contractor-stage-workspace">
+        <!-- PENDING STAGE -->
+        <article class="contractor-stage-panel active" id="pendingStage">
+          <div class="meteor-panel contractor-stage-panel-card">
+            <div class="meteor-panel-head">
+              <div>
+                <h3>הזמנות פתוחות</h3>
+                <p>אפשר לבחור רק פעולה אחת: אישור הגעה, דחייה או בקשת שינוי כמות.</p>
+              </div>
+            </div>
+
+            <div class="contractor-stage-toolbar">
+              <div class="meteor-form-group mb-0">
+                <label class="meteor-label" for="pendingSearchInput">חיפוש</label>
+                <input id="pendingSearchInput" type="text" class="meteor-input" placeholder="חיפוש לפי שם אירוע / קבוצה / אצטדיון / עיר" />
+              </div>
+
+              <div class="meteor-form-group mb-0">
+                <label class="meteor-label" for="pendingDateFilter">תאריך</label>
+                <input id="pendingDateFilter" type="date" class="meteor-input meteor-input-light-picker" />
+              </div>
+            </div>
+
+            <div id="pendingAssignmentsList" class="contractor-stage-list-scroll meteor-events-list">
+              <div class="meteor-empty-state">
+                <strong>טוען הזמנות...</strong>
+                <span>רק רגע.</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- APPROVED STAGE -->
+        <article class="contractor-stage-panel" id="approvedStage">
+          <div class="meteor-panel contractor-stage-panel-card">
+            <div class="meteor-panel-head">
+              <div>
+                <h3>אושרו - ממתינים לספירה</h3>
+                <p>אירועים שאושרו אצלך וכרגע מחכים לספירה מצד המנהל.</p>
+              </div>
+            </div>
+
+            <div class="contractor-stage-toolbar">
+              <div class="meteor-form-group mb-0">
+                <label class="meteor-label" for="approvedSearchInput">חיפוש</label>
+                <input id="approvedSearchInput" type="text" class="meteor-input" placeholder="חיפוש לפי שם אירוע / קבוצה / אצטדיון / עיר" />
+              </div>
+
+              <div class="meteor-form-group mb-0">
+                <label class="meteor-label" for="approvedDateFilter">תאריך</label>
+                <input id="approvedDateFilter" type="date" class="meteor-input meteor-input-light-picker" />
+              </div>
+            </div>
+
+            <div id="approvedAssignmentsList" class="contractor-stage-list-scroll meteor-events-list">
+              <div class="meteor-empty-state small">
+                <strong>טוען נתונים...</strong>
+                <span>רק רגע.</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- SIGNATURE STAGE -->
+        <article class="contractor-stage-panel" id="signatureStage">
+          <div class="meteor-panel contractor-stage-panel-card">
+            <div class="meteor-panel-head">
+              <div>
+                <h3>ממתין לחתימה</h3>
+                <p>כאן תוכל לבדוק את הספירה בפועל, לאשר אותה ולחתום.</p>
+              </div>
+            </div>
+
+            <div class="contractor-stage-toolbar">
+              <div class="meteor-form-group mb-0">
+                <label class="meteor-label" for="signatureSearchInput">חיפוש</label>
+                <input id="signatureSearchInput" type="text" class="meteor-input" placeholder="חיפוש לפי שם אירוע / קבוצה / אצטדיון / עיר" />
+              </div>
+
+              <div class="meteor-form-group mb-0">
+                <label class="meteor-label" for="signatureDateFilter">תאריך</label>
+                <input id="signatureDateFilter" type="date" class="meteor-input meteor-input-light-picker" />
+              </div>
+            </div>
+
+            <div id="signatureAssignmentsList" class="contractor-stage-list-scroll meteor-events-list">
+              <div class="meteor-empty-state small">
+                <strong>טוען נתונים...</strong>
+                <span>רק רגע.</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- WORKERS STAGE -->
+        <article class="contractor-stage-panel" id="workersStage">
+          <div class="meteor-panel contractor-stage-panel-card">
+            <div class="meteor-panel-head">
+              <div>
+                <h3>מאגר עובדים אישי</h3>
+                <p>הוסף עובדים מראש למאגר שלך, ועדכן אותם בקלות עבור אירועים שדורשים רשימות עובדים.</p>
+              </div>
+
+              <div class="meteor-row-actions">
+                <button id="openAddWorkerBtn" class="meteor-btn meteor-btn-primary meteor-btn-sm" type="button">
+                  + עובד חדש
+                </button>
+              </div>
+            </div>
+
+            <div class="contractor-stage-toolbar">
+              <div class="meteor-form-group mb-0">
+                <label class="meteor-label" for="workersSearchInput">חיפוש עובד</label>
+                <input id="workersSearchInput" type="text" class="meteor-input" placeholder="חיפוש לפי שם / ת״ז" />
+              </div>
+
+              <div class="meteor-form-group mb-0">
+                <label class="meteor-label" for="workersCertifiedFilter">סינון</label>
+                <select id="workersCertifiedFilter" class="meteor-input meteor-select">
+                  <option value="all">הכל</option>
+                  <option value="certified">בעלי תעודה</option>
+                  <option value="regular">רגילים</option>
+                </select>
+              </div>
+            </div>
+
+            <div id="workersPoolList" class="contractor-stage-list-scroll meteor-events-list">
+              <div class="meteor-empty-state small">
+                <strong>טוען עובדים...</strong>
+                <span>רק רגע.</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- MONTHLY STAGE -->
+        <article class="contractor-stage-panel" id="monthlyStage">
+          <div class="meteor-panel contractor-stage-panel-card contractor-stage-panel-card-monthly">
+            <div class="meteor-panel-head">
+              <div>
+                <h3>פירוט חודשי כספי</h3>
+                <p>
+                  כאן יוצגו רק אירועים שנחתמו. כל אירוע יוצג עם הנתונים בפועל והסכום שנצבר ממנו,
+                  ובנוסף יופיע סיכום חודשי ברור של מה שצברת עד כה.
+                </p>
+              </div>
+            </div>
+
+            <div class="meteor-inline-info-strip contractor-monthly-inline-strip">
+              <div class="meteor-inline-info-icon">₪</div>
+              <div class="meteor-inline-info-text">
+                בפירוט זה יופיעו <strong>סכומים פר משחק</strong> ו־<strong>סיכום מצטבר לחודש</strong>
+                עבור אירועים חתומים בלבד.
+              </div>
+            </div>
+
+            <div class="contractor-stage-toolbar contractor-stage-toolbar-monthly">
+              <div class="meteor-form-group mb-0">
+                <label class="meteor-label" for="monthlyFilter">חודש</label>
+                <input id="monthlyFilter" type="month" class="meteor-input meteor-input-light-picker" />
+              </div>
+
+              <div class="meteor-form-group mb-0">
+                <label class="meteor-label" for="monthlySearchInput">חיפוש</label>
+                <input id="monthlySearchInput" type="text" class="meteor-input" placeholder="חיפוש לפי אירוע / קבוצה / אצטדיון / עיר" />
+              </div>
+
+              <div class="meteor-form-group mb-0">
+                <label class="meteor-label" for="monthlyDateFilter">תאריך</label>
+                <input id="monthlyDateFilter" type="date" class="meteor-input meteor-input-light-picker" />
+              </div>
+            </div>
+
+            <div class="contractor-monthly-top-layout">
+              <div class="contractor-monthly-main">
+                <div id="monthlySummaryCards" class="contractor-monthly-summary-grid">
+                  <div class="meteor-empty-state small">
+                    <strong>טוען סיכום חודשי...</strong>
+                    <span>המערכת מחשבת את הסכומים שלך.</span>
+                  </div>
+                </div>
+
+                <div class="contractor-monthly-list-head">
+                  <div>
+                    <h4>אירועים שנכנסו לחישוב</h4>
+                    <p>כל כרטיס ברשימה יציג בהמשך את הסכום המדויק שנצבר מהאירוע.</p>
+                  </div>
+                </div>
+
+                <div id="monthlyAssignmentsList" class="contractor-stage-list-scroll meteor-events-list contractor-monthly-list-scroll">
+                  <div class="meteor-empty-state small">
+                    <strong>טוען פירוט חודשי...</strong>
+                    <span>רק רגע.</span>
+                  </div>
+                </div>
+              </div>
+
+              <aside class="contractor-monthly-side">
+                <div class="meteor-mini-widget contractor-monthly-side-widget">
+                  <div class="meteor-mini-title">מה תראה כאן</div>
+                  <div class="meteor-mini-list contractor-monthly-side-list">
+                    <div class="meteor-mini-row">
+                      <strong>סכום לכל אירוע</strong>
+                      <span>כמה צברת מכל משחק / אירוע</span>
+                    </div>
+                    <div class="meteor-mini-row">
+                      <strong>סיכום חודשי</strong>
+                      <span>סה״כ מצטבר לחודש הנבחר</span>
+                    </div>
+                    <div class="meteor-mini-row">
+                      <strong>חתימה בלבד</strong>
+                      <span>רק אירועים חתומים נכנסים לחישוב</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="meteor-mini-widget contractor-monthly-side-widget">
+                  <div class="meteor-mini-title">סטטוס תצוגה</div>
+                  <div id="monthlyStageStatusBox" class="contractor-monthly-status-box">
+                    <div class="meteor-empty-state small">
+                      <strong>ממתין לטעינה</strong>
+                      <span>כאן יוצגו בהמשך הודעות כמו חוסר נתונים או תמחור.</span>
+                    </div>
+                  </div>
+                </div>
+              </aside>
+            </div>
+          </div>
+        </article>
+      </section>
+    </main>
+  </div>
+
+  <!-- Change Request Modal -->
+  <div class="meteor-modal-backdrop" id="changeRequestModalBackdrop"></div>
+  <section class="meteor-modal" id="changeRequestModal" aria-hidden="true">
+    <div class="meteor-modal-dialog contractor-modal-md">
+      <div class="meteor-modal-header">
+        <div>
+          <span class="meteor-chip">בקשת שינוי כמות</span>
+          <h3>שליחת בקשה למנהל</h3>
+          <p id="changeRequestModalSubtitle">עדכון כמויות מבוקשות לאירוע.</p>
+        </div>
+
+        <button type="button" id="closeChangeRequestModalBtn" class="meteor-modal-close" aria-label="סגור">✕</button>
+      </div>
+
+      <div id="changeRequestMessageBox"></div>
+
+      <form id="changeRequestForm" class="meteor-event-form" novalidate>
+        <input type="hidden" id="changeAssignmentId" />
+
+        <div class="meteor-form-section">
+          <div class="meteor-form-section-head">
+            <h4>כמויות מבוקשות חדשות</h4>
+            <p>המערכת תשלח למנהל את בקשת השינוי ותעביר את ההזמנה להמתנה לאישור.</p>
+          </div>
+
+          <div class="meteor-form-grid meteor-form-grid-2">
+            <div class="meteor-form-group">
+              <label class="meteor-label" for="changeWorkers">דיילים</label>
+              <input id="changeWorkers" type="number" inputmode="numeric" pattern="[0-9]*" min="0" step="1" class="meteor-input" value="0" placeholder="0" />
+            </div>
+
+            <div class="meteor-form-group">
+              <label class="meteor-label" for="changeCertified">בעלי תעודה</label>
+              <input id="changeCertified" type="number" inputmode="numeric" pattern="[0-9]*" min="0" step="1" class="meteor-input" value="0" placeholder="0" />
+            </div>
+
+            <div class="meteor-form-group">
+              <label class="meteor-label" for="changeCommanders">מפקדים</label>
+              <input id="changeCommanders" type="number" inputmode="numeric" pattern="[0-9]*" min="0" step="1" class="meteor-input" value="0" placeholder="0" />
+            </div>
+
+            <div class="meteor-form-group">
+              <label class="meteor-label" for="changeEarly">כוח מקדים</label>
+              <input id="changeEarly" type="number" inputmode="numeric" pattern="[0-9]*" min="0" step="1" class="meteor-input" value="0" placeholder="0" />
+            </div>
+
+            <div class="meteor-form-group meteor-form-group-span-2">
+              <label class="meteor-label" for="changeRequestNote">הערה למנהל</label>
+              <textarea id="changeRequestNote" class="meteor-input meteor-textarea" placeholder="אפשר לפרט למה דרוש שינוי כמות"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="contractor-modal-actions">
+          <button type="button" id="cancelChangeRequestBtn" class="meteor-btn meteor-btn-outline">
+            ביטול
+          </button>
+          <button type="submit" id="saveChangeRequestBtn" class="meteor-btn meteor-btn-primary">
+            שלח בקשת שינוי
+          </button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- Signature Modal -->
+  <div class="meteor-modal-backdrop" id="signatureModalBackdrop"></div>
+  <section class="meteor-modal" id="signatureModal" aria-hidden="true">
+    <div class="meteor-modal-dialog contractor-modal-md">
+      <div class="meteor-modal-header">
+        <div>
+          <span class="meteor-chip">אישור ספירה וחתימה</span>
+          <h3>חתימת קבלן</h3>
+          <p id="signatureModalSubtitle">בדוק את נתוני הספירה ואשר.</p>
+        </div>
+
+        <button type="button" id="closeSignatureModalBtn" class="meteor-modal-close" aria-label="סגור">✕</button>
+      </div>
+
+      <div id="signatureMessageBox"></div>
+
+      <form id="signatureForm" class="meteor-event-form" novalidate>
+        <input type="hidden" id="signatureAssignmentId" />
+
+        <div class="meteor-form-section">
+          <div class="meteor-form-section-head">
+            <h4>נתוני ספירה בפועל</h4>
+            <p>יש לעבור על הנתונים ולאשר רק אם הם תואמים למה שנבדק בשטח.</p>
+          </div>
+
+          <div id="signatureStatsBox" class="contractor-signature-stats-grid"></div>
+
+          <div class="meteor-form-group mt-3">
+            <label class="meteor-label" for="signatureNote">הערה לחתימה</label>
+            <textarea id="signatureNote" class="meteor-input meteor-textarea" placeholder="אפשר להוסיף הערה קצרה"></textarea>
+          </div>
+
+          <div class="contractor-signature-pad">
+            <label class="meteor-label">חתימה (חובה)</label>
+
+            <canvas id="signatureCanvas"></canvas>
+
+            <div class="signature-actions">
+              <button type="button" id="clearSignatureBtn" class="meteor-btn meteor-btn-outline meteor-btn-sm">
+                נקה חתימה
+              </button>
+            </div>
+          </div>
+
+          <label class="contractor-confirm-check">
+            <input type="checkbox" id="signatureConfirmCheckbox" />
+            <span>אני מאשר שהספירה תקינה ונבדקה על ידי</span>
+          </label>
+        </div>
+
+        <div class="contractor-modal-actions">
+          <button type="button" id="cancelSignatureBtn" class="meteor-btn meteor-btn-outline">
+            ביטול
+          </button>
+          <button type="submit" id="saveSignatureBtn" class="meteor-btn meteor-btn-primary">
+            אישור וחתימה
+          </button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- Profile Modal -->
+  <div class="meteor-modal-backdrop" id="profileModalBackdrop"></div>
+  <section class="meteor-modal" id="profileModal" aria-hidden="true">
+    <div class="meteor-modal-dialog contractor-modal-md">
+      <div class="meteor-modal-header">
+        <div>
+          <span class="meteor-chip">עדכון פרטים</span>
+          <h3>עדכון פרטי משתמש</h3>
+          <p>אפשר לשנות שם, טלפון, שם משתמש או סיסמה, לאחר אימות הסיסמה הנוכחית.</p>
+        </div>
+
+        <button type="button" id="closeProfileModalBtn" class="meteor-modal-close" aria-label="סגור">✕</button>
+      </div>
+
+      <div id="profileMessageBox"></div>
+
+      <form id="profileForm" class="meteor-event-form" novalidate>
+        <div class="meteor-form-section">
+          <div class="meteor-form-grid meteor-form-grid-2">
+            <div class="meteor-form-group">
+              <label class="meteor-label" for="profileFullName">שם מלא</label>
+              <input id="profileFullName" type="text" class="meteor-input" />
+            </div>
+
+            <div class="meteor-form-group">
+              <label class="meteor-label" for="profilePhone">טלפון</label>
+              <input id="profilePhone" type="text" class="meteor-input" />
+            </div>
+
+            <div class="meteor-form-group">
+              <label class="meteor-label" for="profileUsername">שם משתמש חדש</label>
+              <input id="profileUsername" type="text" class="meteor-input" />
+            </div>
+
+            <div class="meteor-form-group">
+              <label class="meteor-label" for="profileNewPassword">סיסמה חדשה</label>
+              <input id="profileNewPassword" type="password" class="meteor-input" />
+            </div>
+
+            <div class="meteor-form-group meteor-form-group-span-2">
+              <label class="meteor-label" for="profileCurrentPassword">סיסמה נוכחית</label>
+              <input id="profileCurrentPassword" type="password" class="meteor-input" required />
+            </div>
+          </div>
+        </div>
+
+        <div class="contractor-modal-actions">
+          <button type="button" id="cancelProfileBtn" class="meteor-btn meteor-btn-outline">ביטול</button>
+          <button type="submit" id="saveProfileBtn" class="meteor-btn meteor-btn-primary">שמור עדכונים</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- Worker Modal -->
+  <div class="meteor-modal-backdrop" id="workerModalBackdrop"></div>
+  <section class="meteor-modal" id="workerModal" aria-hidden="true">
+    <div class="meteor-modal-dialog contractor-modal-md">
+      <div class="meteor-modal-header">
+        <div>
+          <span class="meteor-chip">מאגר עובדים</span>
+          <h3 id="workerModalTitle">הוספת עובד למאגר</h3>
+          <p>שמור עובדים קבועים שלך כדי שיהיה אפשר לבחור אותם מהר באירועים.</p>
+        </div>
+
+        <button type="button" id="closeWorkerModalBtn" class="meteor-modal-close" aria-label="סגור">✕</button>
+      </div>
+
+      <div id="workerModalMessageBox"></div>
+
+      <form id="workerForm" class="meteor-event-form" novalidate>
+        <input type="hidden" id="workerPoolId" />
+
+        <div class="meteor-form-section">
+          <div class="meteor-form-grid meteor-form-grid-2">
+            <div class="meteor-form-group">
+              <label class="meteor-label" for="workerFullName">שם מלא</label>
+              <input id="workerFullName" type="text" class="meteor-input" required />
+            </div>
+
+            <div class="meteor-form-group">
+              <label class="meteor-label" for="workerIdNumber">תעודת זהות</label>
+              <input id="workerIdNumber" type="text" class="meteor-input" required />
+            </div>
+
+            <div class="meteor-form-group meteor-form-group-span-2">
+              <label class="contractor-confirm-check">
+                <input type="checkbox" id="workerIsCertified" />
+                <span>העובד בעל תעודה</span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="contractor-modal-actions">
+          <button type="button" id="cancelWorkerBtn" class="meteor-btn meteor-btn-outline">ביטול</button>
+          <button type="submit" id="saveWorkerBtn" class="meteor-btn meteor-btn-primary">שמור עובד</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- Event Workers Modal -->
+  <div class="meteor-modal-backdrop" id="eventWorkersModalBackdrop"></div>
+  <section class="meteor-modal" id="eventWorkersModal" aria-hidden="true">
+    <div class="meteor-modal-dialog meteor-modal-dialog-xl">
+      <div class="meteor-modal-header">
+        <div>
+          <span class="meteor-chip">רשימת עובדים לאירוע</span>
+          <h3 id="eventWorkersModalTitle">ניהול רשימת עובדים</h3>
+          <p id="eventWorkersModalSubtitle">אירוע הדורש רשימת עובדים.</p>
+        </div>
+
+        <button type="button" id="closeEventWorkersModalBtn" class="meteor-modal-close" aria-label="סגור">✕</button>
+      </div>
+
+      <div id="eventWorkersMessageBox"></div>
+
+      <div class="contractor-event-workers-top-grid">
+        <section class="meteor-form-section">
+          <div class="meteor-form-section-head">
+            <h4>הוספת עובד חדש לאירוע</h4>
+            <p>אפשר להכניס עובד ישירות לרשימת האירוע, ובמקביל לשמור אותו גם למאגר האישי.</p>
+          </div>
+
+          <form id="eventWorkerForm" class="meteor-event-form" novalidate>
+            <input type="hidden" id="eventWorkerAssignmentId" />
+
+            <div class="meteor-form-grid meteor-form-grid-2">
+              <div class="meteor-form-group">
+                <label class="meteor-label" for="eventWorkerFullName">שם מלא</label>
+                <input id="eventWorkerFullName" type="text" class="meteor-input" />
+              </div>
+
+              <div class="meteor-form-group">
+                <label class="meteor-label" for="eventWorkerIdNumber">תעודת זהות</label>
+                <input id="eventWorkerIdNumber" type="text" class="meteor-input" />
+              </div>
+
+              <div class="meteor-form-group">
+                <label class="contractor-confirm-check">
+                  <input type="checkbox" id="eventWorkerIsCertified" />
+                  <span>בעל תעודה</span>
+                </label>
+              </div>
+
+              <div class="meteor-form-group">
+                <label class="contractor-confirm-check">
+                  <input type="checkbox" id="eventWorkerIsSpare" />
+                  <span>ספייר</span>
+                </label>
+              </div>
+
+              <div class="meteor-form-group meteor-form-group-span-2">
+                <label class="contractor-confirm-check">
+                  <input type="checkbox" id="saveWorkerToPoolCheckbox" checked />
+                  <span>שמור את העובד גם במאגר האישי</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="contractor-inline-actions">
+              <button type="submit" id="saveEventWorkerBtn" class="meteor-btn meteor-btn-primary meteor-btn-sm">
+                הוסף עובד לרשימת האירוע
+              </button>
+            </div>
+          </form>
+        </section>
+
+        <section class="meteor-form-section">
+          <div class="meteor-form-section-head">
+            <h4>בחירה ממאגר קיים</h4>
+            <p>חפש עובד קיים במאגר והוסף אותו בלחיצה לרשימת האירוע.</p>
+          </div>
+
+          <div class="meteor-form-group">
+            <label class="meteor-label" for="eventPoolSearchInput">חיפוש במאגר</label>
+            <input id="eventPoolSearchInput" type="text" class="meteor-input" placeholder="חיפוש לפי שם / ת״ז" />
+          </div>
+
+          <div id="eventPoolResults" class="contractor-pool-pick-list">
+            <div class="meteor-empty-state small">
+              <strong>חפש עובד</strong>
+              <span>כאן יופיעו תוצאות מתוך המאגר שלך.</span>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <section class="meteor-form-section mt-3">
+        <div class="meteor-form-section-head">
+          <h4>רשימת העובדים שהוגשה לאירוע</h4>
+          <p>אפשר לצפות, לחפש ולמחוק עובדים מהרשימה.</p>
+        </div>
+
+        <div class="contractor-stage-toolbar mb-3">
+          <div class="meteor-form-group mb-0">
+            <label class="meteor-label" for="eventWorkersSearchInput">חיפוש ברשימת האירוע</label>
+            <input id="eventWorkersSearchInput" type="text" class="meteor-input" placeholder="חיפוש לפי שם / ת״ז / סטטוס" />
+          </div>
+        </div>
+
+        <div id="eventWorkersListWrap" class="meteor-events-list contractor-event-workers-scroll">
+          <div class="meteor-empty-state small">
+            <strong>טוען רשימת עובדים...</strong>
+            <span>רק רגע.</span>
+          </div>
+        </div>
+      </section>
+    </div>
+  </section>
+   <footer class="meteor-signature">
+  <span>
+    Developed & Designed by <strong>Nor Khatib</strong> · © 2026 Meteor Security System
+  </span>
+</footer>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    ["changeWorkers", "changeCertified", "changeCommanders", "changeEarly"].forEach((id) => {
+      const input = document.getElementById(id);
+      if (!input) return;
+
+      input.addEventListener("keydown", (event) => {
+        if (["e", "E", "+", "-", "."].includes(event.key)) {
+          event.preventDefault();
+        }
+      });
+
+      input.addEventListener("input", () => {
+        if (input.value === "") return;
+        input.value = input.value.replace(/[^\d]/g, "");
+      });
+
+      input.addEventListener("focus", () => {
+        if (input.value === "0") {
+          input.select();
+        }
+      });
+    });
+  </script>
+  <script type="module" src="./js/contractor.js"></script>
+</body>
+</html>
