@@ -2,7 +2,12 @@
 
 Website + operations system for a security & event staffing company: public marketing site, event management, contractor assignment and live head-count in the field. Hebrew RTL.
 
-> Screenshots: add images to a `docs/` folder and link them here.
+## Screenshots
+
+| Desktop | Mobile |
+|---|---|
+| **Home**<br><img src="docs/screenshots/home-desktop.png" width="560"> | <img src="docs/screenshots/home-mobile.png" width="200"> |
+| **Login**<br><img src="docs/screenshots/login-desktop.png" width="560"> | <img src="docs/screenshots/login-mobile.png" width="200"> |
 
 ## Modules
 - **Public site** – services, about, contact (`index.html`).
